@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Todo, TodoProps } from './Todo';
+import { Todo, TodoProps, ActionType } from './Todo';
 import { Action } from './AppReducer';
 
 interface Props {
@@ -29,12 +29,18 @@ export default class Todos extends React.Component<Props, State> {
             <Todo
               key={hash(todo.title)}
               todo={todo}
-              clicked={(t: TodoProps) => {
+              clicked={ (t: TodoProps) => {
                 this.props.dispatch({
                   todo: t,
-                  type: 'TODO_CLICKED'
+                  type: ActionType.Click
                 } as Action);
-              }}
+              } }
+              toggleProp={ (t: TodoProps, type: ActionType) => {
+                this.props.dispatch({
+                  todo: t,
+                  type
+                } as Action);
+              } }
             />
           ))}
         </ul>

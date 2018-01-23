@@ -1,4 +1,4 @@
-import { TodoProps } from './Todo';
+import { TodoProps, ActionType } from './Todo';
 
 export type State = {
   readonly todos: TodoProps[];
@@ -6,7 +6,7 @@ export type State = {
 
 interface TodoAction {
   todo: TodoProps;
-  type: string;
+  type: ActionType;
 }
 interface SearchAction {
   type: string;
@@ -29,9 +29,17 @@ const AppReducer = (state: State = initialState, action: Action) => {
   console.log(`State:`, state);
   console.log(`Action:`, action);
   switch (action.type) {
-    case 'TODO_CLICKED':
+    case ActionType.Click:
       console.log('WOOOO! I was clicked');
-      return state;
+      break;
+    case ActionType.ToggleCompletion:
+      let todoAction = <TodoAction> action;
+      todoAction.todo.completed = !todoAction.todo.completed;
+      console.log(todoAction.todo);
+      console.log(state.todos);
+      break;
+    case ActionType.ToggleImportance:
+      break;
     default:
       console.warn('I was not handled 😢');
   }
